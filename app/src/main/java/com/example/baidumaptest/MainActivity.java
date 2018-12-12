@@ -47,6 +47,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         SDKInitializer.initialize(getApplicationContext());
         setContentView(R.layout.activity_main);
 
+        //设置标题栏:我的车位
+        TextView textView= (TextView) findViewById(R.id.title);
+        textView.setText("我的车位");
+
+
         LinearLayout book= (LinearLayout) findViewById(R.id.book);
         LinearLayout release= (LinearLayout) findViewById(R.id.release);
         LinearLayout my= (LinearLayout) findViewById(R.id.my);

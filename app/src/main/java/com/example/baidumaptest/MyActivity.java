@@ -27,6 +27,10 @@ public class MyActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my);
+        //标题：个人中心
+        TextView textView= (TextView) findViewById(R.id.title);
+        textView.setText("个人中心");
+
 
         mHBack= (ImageView) findViewById(R.id.h_back);
         mHHead= (ImageView) findViewById(R.id.h_head);
