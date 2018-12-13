@@ -3,6 +3,9 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+    <com.example.baidumaptest.TitleLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="60dp"
@@ -71,6 +74,25 @@
             android:layout_weight="1"
             android:layout_gravity="center_vertical"/>
     </LinearLayout>
+    <Button
+        android:id="@+id/upload_carport"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="点击上传我的车位图片"
+        android:textSize="24sp"
+        android:textColor="#000"/>
+    <!--<ImageView
+        android:id="@+id/image_view"
+        android:layout_width="match_parent"
+        android:layout_height="100dp" />-->
+    <com.nex3z.flowlayout.FlowLayout
+        android:id="@+id/mFlowLayout"
+        android:layout_width="match_parent"
+        android:layout_height="100dp">
+
+    </com.nex3z.flowlayout.FlowLayout>
+
     <Button
         android:id="@+id/release_button"
         android:layout_width="match_parent"

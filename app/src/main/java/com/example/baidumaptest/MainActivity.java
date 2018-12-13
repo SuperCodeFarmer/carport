@@ -7,7 +7,9 @@ import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -48,26 +50,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
 
         //设置标题栏:我的车位
-        TextView textView= (TextView) findViewById(R.id.title);
+        TextView textView= (TextView) findViewById(R.id.title_text);
         textView.setText("我的车位");
+        //把主布局的返回箭头隐藏
+        Button button= (Button) findViewById(R.id.title_back);
+        button.setVisibility(View.GONE);
 
 
         LinearLayout book= (LinearLayout) findViewById(R.id.book);
         LinearLayout release= (LinearLayout) findViewById(R.id.release);
         LinearLayout my= (LinearLayout) findViewById(R.id.my);
-
+        //分别实现预定，发布，我的这三个Activity的跳转
         book.setOnClickListener(this);
         release.setOnClickListener(this);
         my.setOnClickListener(this);
 
-
-
-        findViewById(R.id.back).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
         mapView = (MapView) findViewById(R.id.bmapView);
         baiduMap = mapView.getMap();
         baiduMap.setMyLocationEnabled(true);//显示设备位置

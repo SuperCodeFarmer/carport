@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 public class BookActivity extends AppCompatActivity {
     private EditText bookName;
@@ -16,6 +17,9 @@ public class BookActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book);
+        //设置头布局为我的发布
+        TextView title= (TextView) findViewById(R.id.title_text);
+        title.setText("我的发布");
 
         SharedPreferences pref=getSharedPreferences("carportdata",MODE_PRIVATE);
         bookName= (EditText) findViewById(R.id.name);

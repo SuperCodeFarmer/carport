@@ -28,7 +28,7 @@ public class MyActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my);
         //标题：个人中心
-        TextView textView= (TextView) findViewById(R.id.title);
+        TextView textView= (TextView) findViewById(R.id.title_text);
         textView.setText("个人中心");
 
 
