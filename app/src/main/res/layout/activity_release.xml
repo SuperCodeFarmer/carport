@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#c7c3d6">
     <com.example.baidumaptest.TitleLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
@@ -74,32 +75,51 @@
             android:layout_weight="1"
             android:layout_gravity="center_vertical"/>
     </LinearLayout>
-    <Button
-        android:id="@+id/upload_carport"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="点击上传我的车位图片"
-        android:textSize="24sp"
-        android:textColor="#000"/>
-    <!--<ImageView
-        android:id="@+id/image_view"
-        android:layout_width="match_parent"
-        android:layout_height="100dp" />-->
-    <com.nex3z.flowlayout.FlowLayout
-        android:id="@+id/mFlowLayout"
-        android:layout_width="match_parent"
-        android:layout_height="100dp">
 
-    </com.nex3z.flowlayout.FlowLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_marginTop="10dp"
+        android:background="#51727b"
+        android:layout_height="140dp">
+        <ImageView
+            android:id="@+id/imageview_l"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:background="#9c9696"
+            android:layout_marginLeft="4dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginBottom="2dp"
+            >
+        </ImageView>
+
+        <View
+            android:layout_width="4dp"
+            android:layout_height="match_parent"/>
+        <ImageView
+            android:id="@+id/imageview_r"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:background="#9c9696"
+            android:layout_marginRight="4dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginBottom="2dp"
+            >
+        </ImageView>
+    </LinearLayout>
+
 
     <Button
         android:id="@+id/release_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="20dp"
         android:text="我要发布"
         android:textSize="24sp"
-        android:textColor="#000"/>
+        android:textColor="#000"
+        android:background="#9c9696"/>
 
 </LinearLayout>

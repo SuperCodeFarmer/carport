@@ -5,9 +5,12 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -23,6 +26,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -33,11 +38,11 @@ public class ReleaseActivity extends AppCompatActivity implements View.OnClickLi
     private EditText carportNumber;
     private EditText bookTime;
     private EditText bookCost;
-    private String name;
-    private String filename;
-    private ImageView imageView;
-    protected com.nex3z.flowlayout.FlowLayout mFlowLayout;
-    private ArrayList<String> addresses = new ArrayList<>();
+    private ImageView imageView_L;
+    private ImageView imageView_R;
+    private Uri imageUri;
+    private String imageleft;
+    private String imageright;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,36 +55,42 @@ public class ReleaseActivity extends AppCompatActivity implements View.OnClickLi
         carportNumber= (EditText) findViewById(R.id.carport_number);
         bookTime= (EditText) findViewById(R.id.book_time);
         bookCost= (EditText) findViewById(R.id.book_cost);
-        //imageView= (ImageView) findViewById(R.id.image_view);
 
-        Button releaseInfo= (Button) findViewById(R.id.release_button);
-        Button uploadCarport= (Button) findViewById(R.id.upload_carport);
+        imageView_L= (ImageView) findViewById(R.id.imageview_l);//左边图片
+        imageView_R= (ImageView) findViewById(R.id.imageview_r);//右边图片
+        Button releaseInfo= (Button) findViewById(R.id.release_button);//发布车位
+
+        //左边图片和右边图片的名称
+        imageleft="image_left.jpg";
+        imageright="image_left.jpg";
+
+        imageView_L.setOnClickListener(this);
+        imageView_R.setOnClickListener(this);
         releaseInfo.setOnClickListener(this);
-        uploadCarport.setOnClickListener(this);
-        //存储照片的路径
-        mFlowLayout = (com.nex3z.flowlayout.FlowLayout) findViewById(R.id.mFlowLayout);
-        filename = Environment.getExternalStorageDirectory().getAbsolutePath() + "/photos/";
     }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.upload_carport:
-                showDialogg();
+            case R.id.imageview_l:
+                showDialog();
                 break;
-            case R.id.release:
+            case R.id.imageview_r:
+                showDialog();
+                break;
+            case R.id.release_button:
                 SharedPreferences.Editor editor = getSharedPreferences("carportdata", MODE_PRIVATE).edit();
                 editor.putString("carportaddress", carportAddress.getText().toString());
                 editor.putString("carportnumber", carportNumber.getText().toString());
                 editor.putString("booktime", bookTime.getText().toString());
                 editor.putString("bookcost", bookCost.getText().toString());
-                editor.apply();
                 Toast.makeText(ReleaseActivity.this, "发布成功", Toast.LENGTH_SHORT).show();
+                editor.apply();
                 break;
             default:
         }
     }
-    private void showDialogg(){
+    private void showDialog(){
         View view = LayoutInflater.from(this).inflate(R.layout.dialog_layout,null,false);
         final AlertDialog dialog = new AlertDialog.Builder(this).setView(view).create();
         Button takePhoto = (Button) view.findViewById(R.id.take_photo);
@@ -110,80 +121,51 @@ public class ReleaseActivity extends AppCompatActivity implements View.OnClickLi
 
     //拍照
     private void takephoto() {
-            name = getPhotoFileName();
-            File mFile = new File(filename);
-            if (!mFile.exists()) {
-                mFile.mkdirs();
+        File outputStream=new File(getExternalCacheDir(),"output_image.jpg");
+        try{
+            if (outputStream.exists()){
+                outputStream.delete();
             }
-            File mPhotoFile = new File(filename, name);
-            Intent captureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-            Uri fileUri = Uri.fromFile(mPhotoFile);
-            captureIntent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri);
-            startActivityForResult(captureIntent, 0);
+            outputStream.createNewFile();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        if (Build.VERSION.SDK_INT>=24){
+
+        }else{
+            imageUri=Uri.fromFile(outputStream);
+        }
+        Intent intent=new Intent("android.media.action.IMAGE_CAPTURE");
+        intent.putExtra(MediaStore.EXTRA_OUTPUT,imageUri);
+        startActivityForResult(intent,0);
     }
     //从相册中选择
     public void opoenGallery(){
-        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-        intent.setType("image/*");
-        intent.putExtra("crop", true);
-        intent.putExtra("return-data", true);
-        startActivityForResult(intent, 1);
 
-    }
-    private String getPhotoFileName() {
-        Date date = new Date(System.currentTimeMillis());
-        SimpleDateFormat dateFormat = new SimpleDateFormat(
-                "'IMG'_yyyyMMdd_HH-mm-ss");
-        return dateFormat.format(date) + ".jpg";
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode == RESULT_OK) {
-            //获取到相机拍的照片
-            if (requestCode == 0) {
-                String filestr = filename + "/" + name;
-                //向flowlayout中添加图片
-                addPhotoToFlow(filestr);
+        switch (requestCode){
+            case 0:
+                if (resultCode==RESULT_OK){
+                    try {
+                        Bitmap bitmap= BitmapFactory.decodeStream(getContentResolver().openInputStream(imageUri));
+                        if (imageView_L.getDrawable()==null){
+                            imageView_L.setImageBitmap(bitmap);
+                        }else if (imageView_R.getDrawable()==null){
+                            imageView_R.setImageBitmap(bitmap);
+                        }
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    }
 
-            }
-            //获取到图库的照片
-            if (requestCode == 1) {
-                Uri selectedImage = data.getData();
-                String[] filePathColumn = {MediaStore.Images.Media.DATA};
-                Cursor cursor = this.getContentResolver().query(selectedImage,
-                        filePathColumn, null, null, null);
-                cursor.moveToFirst();
-                int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-                //picturePath就是图片在储存卡所在的位置
-                String picturePath = cursor.getString(columnIndex);
-                Log.e("aaa","pocture===>"+picturePath);
-                cursor.close();
-                addPhotoToFlow(picturePath);
-            }
-
+                }
+                break;
+            default:
+                break;
         }
     }
-
-        private void addPhotoToFlow(String filestr) {
-            //获取旋转角度
-            int degree = PhotoUtils.getBitmapDegree(filestr);
-            //压缩图片
-            Bitmap bitmap1 = PhotoUtils.decodeSampledBitmapFromFd(filestr, 500, 250);
-            //根据旋转角度旋转图片
-            Bitmap bitmap2 = PhotoUtils.rotateBitmapByDegree(bitmap1, degree);
-
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-            ImageView imageView = new ImageView(this);
-            params.setMargins(15, 15, 15, 15);
-            imageView.setLayoutParams(params);
-
-            imageView.setPadding(18, 18, 18, 18);
-            imageView.setTag(filestr);
-            imageView.setImageBitmap(bitmap2);
-            addresses.add(filestr);
-            mFlowLayout.addView(imageView);
-        }
 
     static class ScreenUtils{
         //设置对话框的告诉占整个屏幕的几分之几

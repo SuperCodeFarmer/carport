@@ -92,9 +92,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.book:
                 Intent intentBook=new Intent(this,BookActivity.class);
                 startActivity(intentBook);
+                Log.e("MainActivity","yly---1");
                 break;
             case R.id.release:
                 Intent intentRelease=new Intent(this,ReleaseActivity.class);
+                Log.e("MainActivity","yly---2");
                 startActivity(intentRelease);
                 break;
             case R.id.my:
