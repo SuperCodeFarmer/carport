@@ -1,5 +1,7 @@
 package com.example.baidumaptest;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -20,10 +22,14 @@ import java.util.zip.Inflater;
 
 public class BookAdapter extends RecyclerView.Adapter<BookAdapter.ViewHolder>{
     private List<BookItem> bookItemsList;
+    private OnRecyclerViewClickListener listener;
+
 
     public BookAdapter(List<BookItem> bookItemsList) {
-        Log.e("BookAdapter","yly____1");
         this.bookItemsList = bookItemsList;
+    }
+    public void setItemClickListener(OnRecyclerViewClickListener itemClickListener) {
+        listener = itemClickListener;
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder{
@@ -45,6 +51,14 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.ViewHolder>{
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.book_item,parent,false);
         ViewHolder holder =new ViewHolder(view);
+        if (listener!=null){
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    listener.onItemClickListener(v);
+                }
+            });
+        }
         return holder;
     }
 
@@ -64,4 +78,5 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.ViewHolder>{
     public int getItemCount() {
         return bookItemsList.size();
     }
+
 }
