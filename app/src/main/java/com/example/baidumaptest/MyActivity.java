@@ -1,9 +1,12 @@
 package com.example.baidumaptest;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -18,7 +21,7 @@ import java.util.List;
 import jp.wasabeef.glide.transformations.BlurTransformation;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 
-public class MyActivity extends AppCompatActivity {
+public class MyActivity extends AppCompatActivity implements View.OnClickListener {
 
     private ImageView mHBack;
     private ImageView mHHead;
@@ -30,6 +33,14 @@ public class MyActivity extends AppCompatActivity {
         //标题：个人中心
         TextView textView= (TextView) findViewById(R.id.title_text);
         textView.setText("个人中心");
+
+        LinearLayout book= (LinearLayout) findViewById(R.id.book);
+        LinearLayout release= (LinearLayout) findViewById(R.id.release);
+        LinearLayout my= (LinearLayout) findViewById(R.id.my);
+        //分别实现预定，发布，我的这三个Activity的跳转
+        book.setOnClickListener(this);
+        release.setOnClickListener(this);
+        my.setOnClickListener(this);
 
 
         mHBack= (ImageView) findViewById(R.id.h_back);
@@ -52,11 +63,11 @@ public class MyActivity extends AppCompatActivity {
     }
 
     public void initData(){
-        MyItem item1=new MyItem(R.drawable.ic_pass,"我的钱包");
+        MyItem item1=new MyItem(R.drawable.ic_pass,"我的发布");
         listItem.add(item1);
-        MyItem item2=new MyItem(R.drawable.ic_pass,"我的钱包");
+        MyItem item2=new MyItem(R.drawable.ic_pass,"我的预定");
         listItem.add(item2);
-        MyItem item3=new MyItem(R.drawable.ic_pass,"我的车位");
+        MyItem item3=new MyItem(R.drawable.ic_pass,"我的钱包");
         listItem.add(item3);
         MyItem item4=new MyItem(R.drawable.ic_pass,"我的服务");
         listItem.add(item4);
@@ -64,4 +75,22 @@ public class MyActivity extends AppCompatActivity {
         listItem.add(item5);
     }
 
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.book:
+                Intent intentBook=new Intent(this,BookActivity.class);
+                startActivity(intentBook);
+                break;
+            case R.id.release:
+                Intent intentRelease=new Intent(this,ReleaseActivity.class);
+                startActivity(intentRelease);
+                break;
+            case R.id.my:
+                Intent intentMy=new Intent(this,MyActivity.class);
+                startActivity(intentMy);
+                break;
+            default:
+        }
+    }
 }

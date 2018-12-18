@@ -33,7 +33,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:textSize="18sp"
-            android:text="车位编号"/>
+            android:text="出租时长"/>
         <EditText
             android:id="@+id/carport_number"
             android:layout_width="0dp"
@@ -50,7 +50,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:textSize="18sp"
-            android:text="租出时间"/>
+            android:text="发布时间"/>
         <EditText
             android:id="@+id/book_time"
             android:layout_width="0dp"
