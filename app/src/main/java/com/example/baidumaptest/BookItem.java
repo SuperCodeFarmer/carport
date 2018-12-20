@@ -1,25 +1,32 @@
 package com.example.baidumaptest;
 
+import android.graphics.drawable.Drawable;
+
+import org.litepal.crud.DataSupport;
+
+import java.io.Serializable;
+
 /**
  * Created by yly on 2018/12/14.
  */
 
-public class BookItem {
-    private int carportImage;
+public class BookItem extends DataSupport{
     private String carportAddress;
     private String carportCost;
-    private String carportTimeout;
+    private String carportTimeout;//出租时长
+    private String carportTime;//发布时间
+    private String carportDetail;//出租详情
+    private byte[] carportImage;//存储图片
 
-    public BookItem(int carportImage, String carportAddress, String carportCost, String carportTimeout) {
-        this.carportImage = carportImage;
-        this.carportAddress = carportAddress;
-        this.carportCost = carportCost;
-        this.carportTimeout = carportTimeout;
+
+    public void setCarportTime(String carportTime) {
+        this.carportTime = carportTime;
     }
 
-    public void setCarportImage(int carportImage) {
-        this.carportImage = carportImage;
+    public void setCarportDetail(String carportDetail) {
+        this.carportDetail = carportDetail;
     }
+
 
     public void setCarportAddress(String carportAddress) {
         this.carportAddress = carportAddress;
@@ -33,8 +40,8 @@ public class BookItem {
         this.carportTimeout = carportTimeout;
     }
 
-    public int getCarportImage() {
-        return carportImage;
+    public void setCarportImage(byte[] carportImage) {
+        this.carportImage = carportImage;
     }
 
     public String getCarportAddress() {
@@ -47,5 +54,17 @@ public class BookItem {
 
     public String getCarportTimeout() {
         return carportTimeout;
+    }
+
+    public String getCarportTime() {
+        return carportTime;
+    }
+
+    public String getCarportDetail() {
+        return carportDetail;
+    }
+
+    public byte[] getCarportImage() {
+        return carportImage;
     }
 }

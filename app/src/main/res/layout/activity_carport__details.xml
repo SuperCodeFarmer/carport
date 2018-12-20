@@ -10,32 +10,52 @@
         android:orientation="vertical"/>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="20sp"
-            android:textColor="#000"
-            android:text="室内停车场"/>
+        android:layout_height="80dp"
+        android:layout_margin="5dp">
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="5"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/carport_detail_address"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:textSize="18sp"
+                android:textColor="#000"/>
+            <TextView
+                android:id="@+id/carport_detail_timeout"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:textSize="18sp"
+                android:textColor="#000"/>
+            <TextView
+                android:id="@+id/carport_detail_time"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:textSize="18sp"
+                android:textColor="#000"/>
+        </LinearLayout>
         <TextView
             android:id="@+id/carport_detail_cost"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="18sp"
-            android:text="30元/小时"
-            android:textColor="#e11111"/>
-        <TextView
-            android:id="@+id/carport_detail_address"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="12sp"
-            android:text="东王庄小区"
-            android:textColor="#000"/>
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:textSize="20sp"
+            android:gravity="center"
+            android:textColor="#d20a2b"/>
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="#dfa6a6"
         android:layout_marginTop="6dp">
         <ImageView
             android:id="@+id/image_detail_1"
@@ -43,6 +63,7 @@
             android:layout_height="100dp"
             android:layout_weight="1"
             android:scaleType="fitXY"
+
           />
         <ImageView
             android:id="@+id/image_detail_2"
@@ -66,9 +87,11 @@
         android:background="#88999696"
         >
         <TextView
+            android:id="@+id/carport_detail_detai"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="30sp"
+            android:textSize="18sp"
+            android:maxLines="10"
             android:text="停车场详细介绍"/>
     </LinearLayout>
     <LinearLayout

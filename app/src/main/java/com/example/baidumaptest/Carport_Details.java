@@ -2,6 +2,8 @@ package com.example.baidumaptest;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -14,10 +16,15 @@ public class Carport_Details extends AppCompatActivity implements View.OnClickLi
     private Button submit;
     private TextView carportDetailCost;
     private TextView carportDetailAddress;
+    private TextView carportDetailTimeout;
+    private TextView carportDetailTime;
+    private TextView carportDetai;
+
     private ImageView carportImageDetail_1;
     private ImageView carportImageDetail_2;
     private ImageView carportImageDetail_3;
 
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,13 +35,21 @@ public class Carport_Details extends AppCompatActivity implements View.OnClickLi
 
         carportDetailAddress= (TextView) findViewById(R.id.carport_detail_address);
         carportDetailCost= (TextView) findViewById(R.id.carport_detail_cost);
+        carportDetailTime= (TextView) findViewById(R.id.carport_detail_time);
+        carportDetailTimeout= (TextView) findViewById(R.id.carport_detail_timeout);
+        carportDetai= (TextView) findViewById(R.id.carport_detail_detai);
+
         carportImageDetail_1= (ImageView) findViewById(R.id.image_detail_1);
         carportImageDetail_2= (ImageView) findViewById(R.id.image_detail_2);
         carportImageDetail_3= (ImageView) findViewById(R.id.image_detail_3);
 
         Intent intent=getIntent();
-        carportDetailAddress.setText(intent.getStringExtra("address"));
-        carportDetailCost.setText(intent.getStringExtra("carportcost"));
+        carportDetailAddress.setText(intent.getStringExtra("carportAddress"));
+        carportDetailCost.setText(intent.getStringExtra("carportCost"));
+        carportDetailTimeout.setText(intent.getStringExtra("carportTimeout"));
+        carportDetailTime.setText(intent.getStringExtra("carportTime"));
+        carportDetai.setText(intent.getStringExtra("carportDetai"));
+
         carportImageDetail_1.setImageBitmap((Bitmap) intent.getParcelableExtra("carportimage"));
         submit= (Button) findViewById(R.id.submit_button);
         submit.setOnClickListener(this);

@@ -33,6 +33,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.litepal.LitePal;
+
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -43,14 +46,16 @@ import java.util.Date;
 public class ReleaseActivity extends AppCompatActivity implements View.OnClickListener {
 
     private EditText carportAddress;
-    private EditText carportNumber;
-    private EditText bookTime;
-    private EditText bookCost;
+    private EditText carportTimeout;
+    private EditText bookCost1;
+    private EditText carportDetail;
     private ImageView imageView_L;
     private ImageView imageView_R;
     private Uri imageUri;
     private String imageleft;
     private String imageright;
+    private BookItem bookItem;
+    private  File outputStream;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,14 +64,20 @@ public class ReleaseActivity extends AppCompatActivity implements View.OnClickLi
         TextView title= (TextView) findViewById(R.id.title_text);
         title.setText("我的发布");
 
+        //初始化BooItem
+        bookItem=new BookItem();
+
         carportAddress= (EditText) findViewById(R.id.carport_address);
-        carportNumber= (EditText) findViewById(R.id.carport_number);
-        bookTime= (EditText) findViewById(R.id.book_time);
-        bookCost= (EditText) findViewById(R.id.book_cost);
+        carportTimeout= (EditText) findViewById(R.id.carport_timeout);
+        bookCost1= (EditText) findViewById(R.id.book_cost);
+        carportDetail= (EditText) findViewById(R.id.book_detail);
 
         imageView_L= (ImageView) findViewById(R.id.imageview_l);//左边图片
         imageView_R= (ImageView) findViewById(R.id.imageview_r);//右边图片
         Button releaseInfo= (Button) findViewById(R.id.release_button);//发布车位
+
+        //获取当前系统时间并设置在发布时间位置
+
 
         //左边图片和右边图片的名称
         imageleft="image_left.jpg";
@@ -75,6 +86,7 @@ public class ReleaseActivity extends AppCompatActivity implements View.OnClickLi
         imageView_L.setOnClickListener(this);
         imageView_R.setOnClickListener(this);
         releaseInfo.setOnClickListener(this);
+
     }
 
     @Override
@@ -87,13 +99,17 @@ public class ReleaseActivity extends AppCompatActivity implements View.OnClickLi
                 showDialog();
                 break;
             case R.id.release_button:
-                SharedPreferences.Editor editor = getSharedPreferences("carportdata", MODE_PRIVATE).edit();
-                editor.putString("carportaddress", carportAddress.getText().toString());
-                editor.putString("carporttimeout", carportNumber.getText().toString());
-                editor.putString("booktime", bookTime.getText().toString());
-                editor.putString("bookcost", bookCost.getText().toString());
-                Toast.makeText(ReleaseActivity.this, "发布成功，请去个人中心查看我发布的车位", Toast.LENGTH_SHORT).show();
-                editor.apply();
+                Log.e("ReleaseActivity","ylylyyl----1");
+                LitePal.getDatabase();
+                Log.e("ReleaseActivity","ylylyyl------2");
+                bookItem.setCarportAddress(carportAddress.getText().toString());
+                bookItem.setCarportTimeout(carportTimeout.getText().toString()+"小时");
+                bookItem.setCarportCost(bookCost1.getText().toString()+"元/小时");
+                bookItem.setCarportDetail(carportDetail.getText().toString());
+                bookItem.setCarportTime(new SimpleDateFormat("MM月dd日 HH:mm:ss")
+                        .format( new java.sql.Date(System.currentTimeMillis())));
+                bookItem.save();
+                Toast.makeText(this,"车位已经发布，请去个人中心查看",Toast.LENGTH_LONG).show();
                 break;
             default:
         }
@@ -129,7 +145,7 @@ public class ReleaseActivity extends AppCompatActivity implements View.OnClickLi
 
     //拍照
     private void takephoto() {
-        File outputStream=new File(getExternalCacheDir(),"output_image.jpg");
+        outputStream=new File(getExternalCacheDir(),"output_image.jpg");
         try{
             if (outputStream.exists()){
                 outputStream.delete();
@@ -146,6 +162,8 @@ public class ReleaseActivity extends AppCompatActivity implements View.OnClickLi
         }
         Intent intent=new Intent("android.media.action.IMAGE_CAPTURE");
         intent.putExtra(MediaStore.EXTRA_OUTPUT,imageUri);
+
+        Log.e("ReleaseActivity",outputStream.getAbsolutePath()+"yly");
         startActivityForResult(intent,0);
     }
     //从相册中选择
@@ -189,6 +207,7 @@ public class ReleaseActivity extends AppCompatActivity implements View.OnClickLi
                         }else if (imageView_R.getDrawable()==null){
                             imageView_R.setImageBitmap(bitmap);
                         }
+
                     } catch (FileNotFoundException e) {
                         e.printStackTrace();
                     }
@@ -268,6 +287,7 @@ public class ReleaseActivity extends AppCompatActivity implements View.OnClickLi
             Toast.makeText(this, "failed to get image", Toast.LENGTH_SHORT).show();
         }
     }
+
 
     static class ScreenUtils{
         //设置对话框的告诉占整个屏幕的几分之几
