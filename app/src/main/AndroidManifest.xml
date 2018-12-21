@@ -21,14 +21,15 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <provider
-            android:authorities="com.example.cameraalbumtest.fileprovider"
             android:name="android.support.v4.content.FileProvider"
+            android:authorities="com.example.cameraalbumtest.fileprovider"
             android:exported="false"
-            android:grantUriPermissions="true"
-            >
-            <meta-data android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths"/>
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
         </provider>
+
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="tUXRCUdwaoD1pKjwYeImQlcNVA6qaUo9" />
@@ -51,7 +52,9 @@
         <activity android:name=".BookActivity" />
         <activity android:name=".ReleaseActivity" />
         <activity android:name=".MyActivity" />
-        <activity android:name=".Carport_Details"></activity>
+        <activity android:name=".Carport_Details" />
+        <activity android:name=".LogInActivity" />
+        <activity android:name=".RegisterActivity"></activity>
     </application>
 
 </manifest>
