@@ -32,7 +32,11 @@
 
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
-            android:value="tUXRCUdwaoD1pKjwYeImQlcNVA6qaUo9" />
+
+            android:value="kZyfzjTOYRXv7jkhdH2ud4tfHbwGiUhL" />
+        <!--tUXRCUdwaoD1pKjwYeImQlcNVA6qaUo9-->
+       <!-- kZyfzjTOYRXv7jkhdH2ud4tfHbwGiUhL//这个是生成的签名的-->
+     <!--   WceNvE0xMBu4pAtmoh2iNAlHSFHOGepu-->//这个是第一次生成的好的
 
         <activity
             android:name=".MainActivity"

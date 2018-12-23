@@ -99,9 +99,7 @@ public class ReleaseActivity extends AppCompatActivity implements View.OnClickLi
                 showDialog();
                 break;
             case R.id.release_button:
-                Log.e("ReleaseActivity","ylylyyl----1");
                 LitePal.getDatabase();
-                Log.e("ReleaseActivity","ylylyyl------2");
                 bookItem.setCarportAddress(carportAddress.getText().toString());
                 bookItem.setCarportTimeout(carportTimeout.getText().toString()+"小时");
                 bookItem.setCarportCost(bookCost1.getText().toString()+"元/小时");

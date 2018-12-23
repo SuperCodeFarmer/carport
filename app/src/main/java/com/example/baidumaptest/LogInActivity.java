@@ -19,7 +19,7 @@ public class LogInActivity extends AppCompatActivity {
         //login button
         final Button login = (Button) findViewById(R.id.button);
         final String user = "admin";
-        final String pass = "hello";
+        final String pass = "admin";
 
         login.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
@@ -47,7 +47,7 @@ public class LogInActivity extends AppCompatActivity {
         register.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 //提示框确定是否跳转
-                new AlertDialog.Builder(LogInActivity.this).setTitle("Jump").setMessage("Ready to jump?")
+                new AlertDialog.Builder(LogInActivity.this).setTitle("注册").setMessage("接下来您将进入注册界面?")
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 Intent intent = new Intent(LogInActivity.this,RegisterActivity.class);
