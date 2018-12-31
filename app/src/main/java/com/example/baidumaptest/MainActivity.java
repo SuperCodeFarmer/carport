@@ -21,6 +21,7 @@ import com.baidu.location.LocationClientOption;
 import com.baidu.mapapi.SDKInitializer;
 import com.baidu.mapapi.map.BaiduMap;
 import com.baidu.mapapi.map.MapStatus;
+import com.baidu.mapapi.map.MapStatusUpdate;
 import com.baidu.mapapi.map.MapStatusUpdateFactory;
 import com.baidu.mapapi.map.MapView;
 import com.baidu.mapapi.map.MyLocationData;
@@ -113,19 +114,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             Toast.makeText(this, "当前位置：" + location.getAddrStr(), Toast.LENGTH_LONG).show();
             //得到经纬度
             LatLng ll = new LatLng(location.getLatitude(), location.getLongitude());
-//            MapStatusUpdate update = MapStatusUpdateFactory.newLatLng(ll);
-//            baiduMap.animateMapStatus(update);
-//            update = MapStatusUpdateFactory.zoomTo(16f);//设置缩放
-           //baiduMap.animateMapStatus(update);
-//            MapStatus.Builder builder = new MapStatus.Builder();
-//            builder.target(ll);
-//            builder.zoom(16f);//设置缩放
-//            baiduMap.setMapStatus(MapStatusUpdateFactory.newMapStatus(builder.build()));
-            MapStatus builder=new MapStatus.Builder()
+            MapStatusUpdate update = MapStatusUpdateFactory.newLatLng(ll);
+            baiduMap.animateMapStatus(update);
+            update = MapStatusUpdateFactory.zoomTo(16f);//设置缩放
+            baiduMap.animateMapStatus(update);
+
+/*
+            MapStatus.Builder builder = new MapStatus.Builder();
+            builder.target(ll);
+            builder.zoom(16f);//设置缩放
+            baiduMap.setMapStatus(MapStatusUpdateFactory.newMapStatus(builder.build()));*/
+         /*   MapStatus builder=new MapStatus.Builder()
                     .target(ll)
                     .zoom(16f)
                     .build();
             baiduMap.setMapStatus(MapStatusUpdateFactory.newMapStatus(builder));//定位当前位置
+*/
+
             isFirstLocate = false;
         }
         //显示我
@@ -145,6 +150,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         LocationClientOption option = new LocationClientOption();
         option.setScanSpan(5000);//5s更新一次
         option.setIsNeedAddress(true);//显示位置信息
+        option.setLocationMode(LocationClientOption.LocationMode.Hight_Accuracy);
+        option.setOpenGps(true);
         mLocationClient.setLocOption(option);
     }
 

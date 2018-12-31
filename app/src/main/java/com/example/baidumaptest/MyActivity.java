@@ -35,7 +35,7 @@ public class MyActivity extends AppCompatActivity implements View.OnClickListene
         textView.setText("个人中心");
 
         //点击进入注册或者登陆界面
-        TextView logIn= (TextView) findViewById(R.id.login);
+      /*  TextView logIn= (TextView) findViewById(R.id.login);*/
 
         LinearLayout book= (LinearLayout) findViewById(R.id.book);
         LinearLayout release= (LinearLayout) findViewById(R.id.release);
@@ -44,7 +44,7 @@ public class MyActivity extends AppCompatActivity implements View.OnClickListene
         book.setOnClickListener(this);
         release.setOnClickListener(this);
         my.setOnClickListener(this);
-        logIn.setOnClickListener(this);
+        //logIn.setOnClickListener(this);
 
 
         mHBack= (ImageView) findViewById(R.id.h_back);
@@ -94,10 +94,10 @@ public class MyActivity extends AppCompatActivity implements View.OnClickListene
                 Intent intentMy=new Intent(this,MyActivity.class);
                 startActivity(intentMy);
                 break;
-            case R.id.login:
+        /*    case R.id.login:
                     Intent intent=new Intent(this,LogInActivity.class);
                     startActivity(intent);
-                break;
+                break;*/
             default:
         }
     }
